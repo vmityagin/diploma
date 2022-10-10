@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const limiter = require('./middlewares/rateLimiter');
 const router = require('./routes/routes');
 const { errorsCheck } = require('./middlewares/errors');
 const { errorLogger, requestLogger } = require('./middlewares/logger');
@@ -23,6 +24,7 @@ mongoose.connect(`${MONGO_URI}`, {
 });
 
 app.use(requestLogger);
+app.use(limiter);
 app.use(router);
 app.use(errorLogger);
 

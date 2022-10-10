@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 
 const MovieSchema = new mongoose.Schema({
   country: {
@@ -53,15 +52,15 @@ const MovieSchema = new mongoose.Schema({
   },
 });
 
-const validateLink = function (value) {
+const validateLink = function validateLink(value) {
   return /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/gm.test(value);
 };
 
-const validateLatinLetters = function (value) {
+const validateLatinLetters = function validateLatinLetters(value) {
   return /^[a-zA-Z0-9\s]+$/gm.test(value);
 };
 
-const validateCyrillicLetters = function (value) {
+const validateCyrillicLetters = function validateCyrillicLetters(value) {
   return /^[а-яА-яёЁ0-9\s]+$/gm.test(value);
 };
 

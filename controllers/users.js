@@ -13,17 +13,17 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
-  .then((user) => {
-    const token = jwt.sign(
-      { _id: user._id.toString() },
-      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-      { expiresIn: '7d' },
-    );
-    res.send({ token });
-  })
-  .catch(() => {
-    next(new NotValidData('Передан неверный логин или пароль'));
-  });
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id.toString() },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res.send({ token });
+    })
+    .catch(() => {
+      next(new NotValidData('Передан неверный логин или пароль'));
+    });
 };
 
 module.exports.createUser = (req, res, next) => {
@@ -73,7 +73,7 @@ module.exports.updateUser = (req, res, next) => {
 
   User.findByIdAndUpdate(
     req.user._id,
-    { name: `${name}`, email: `${email}`},
+    { name: `${name}`, email: `${email}` },
     { new: true, runValidators: true },
   )
     .then((user) => res.send({ data: user }))

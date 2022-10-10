@@ -7,5 +7,5 @@ module.exports = {
   regularLinkRegExp,
   regularLatinLettersRegExp,
   regularCyrilicLettersRegExp,
-  regularEmailRegExp
+  regularEmailRegExp,
 };
