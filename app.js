@@ -4,22 +4,25 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 const { errors } = require('celebrate');
 const limiter = require('./middlewares/rateLimiter');
 const router = require('./routes/routes');
 const { errorsCheck } = require('./middlewares/errors');
 const { errorLogger, requestLogger } = require('./middlewares/logger');
+const { mongoUri } = require('./constants/constants');
 
-const { MONGO_URI } = process.env;
+const { MONGO_URI, NODE_ENV } = process.env;
 
 const app = express();
+app.use(helmet());
 app.use(cors());
 
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect(`${MONGO_URI}`, {
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URI : mongoUri, {
   useNewUrlParser: true, useUnifiedTopology: true,
 });
 

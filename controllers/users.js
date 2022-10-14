@@ -80,7 +80,10 @@ module.exports.updateUser = (req, res, next) => {
     .catch((e) => {
       if (e.name === 'ValidationError') {
         next(new NotCorrectData('Переданы некорректные данные при обновлении профиля'));
+      } else if (e.codeName === 'DuplicateKey') {
+        next(new NotUniqData('Используется email другого пользователя'));
       } else {
+        console.log(e.codeName);
         next(new ServerError('Произошла ошибка'));
       }
     });
